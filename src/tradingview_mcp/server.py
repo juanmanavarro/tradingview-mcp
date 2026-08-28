@@ -9,6 +9,7 @@ Each @mcp.tool() handler is responsible for:
 No business logic lives here. All computation is in core/services/*.
 """
 from __future__ import annotations
+from mcp.server.transport_security import TransportSecuritySettings
 
 import argparse
 import asyncio
@@ -118,6 +119,16 @@ mcp = FastMCP(
         "Tools: top_gainers, top_losers, bollinger_scan, coin_analysis, multi_agent_analysis, "
         "volume_breakout_scanner, futures_market_overview, futures_top_movers, "
         "futures_category_snapshot, futures_watchlist, egx_market_overview, and more."
+    ),
+    transport_security=TransportSecuritySettings(
+        enable_dns_rebinding_protection=True,
+        allowed_hosts=[
+            "127.0.0.1:*",
+            "localhost:*",
+            "[::1]:*",
+            "tradingview-mcp.juanma.app",
+            "tradingview-mcp.juanma.app:*",
+        ],
     ),
 )
 
