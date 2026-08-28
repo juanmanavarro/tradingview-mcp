@@ -34,8 +34,8 @@ USER mcpuser
 EXPOSE 8000
 
 # Health check
-# HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
-#     CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" || exit 1
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD python -c "import socket; s=socket.create_connection(('127.0.0.1',8000),3); s.close()"
 
 # Run the MCP server over streamable-http (ideal for Docker/remote deployments)
 ENTRYPOINT ["tradingview-mcp"]
